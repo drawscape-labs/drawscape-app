@@ -9,6 +9,7 @@ const NavBar = () => {
     <HStack as="nav" bg="blue" px={6} py={4}>
       <LinkButton href="/">Home</LinkButton>
       <LinkButton href="/accounts">Accounts</LinkButton>
+      <LinkButton href="/factorio">Factorio</LinkButton>
     </HStack>
   )
 }
