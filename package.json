@@ -1,0 +1,35 @@
+{
+  "name": "hello-outbound-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/next-js": "^2.2.0",
+    "@chakra-ui/pro-theme": "^0.10.0",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/pro-duotone-svg-icons": "^6.5.2",
+    "@fortawesome/pro-light-svg-icons": "^6.5.2",
+    "@fortawesome/pro-regular-svg-icons": "^6.5.2",
+    "@fortawesome/pro-solid-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.1",
+    "framer-motion": "^11.2.6",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.12",
+    "@types/react": "18.3.2",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3"
+  }
+}
