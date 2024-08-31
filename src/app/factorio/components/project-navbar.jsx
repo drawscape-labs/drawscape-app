@@ -1,23 +1,33 @@
 'use client'
 
+import { useState } from 'react'
 import { Box, Container, HStack } from '@chakra-ui/react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import StandardButton from './buttons/standard-button'
-import OutlinedButton from './buttons/outlined-button'
-import { faDownload, faUpload } from '@fortawesome/free-solid-svg-icons'
-import Storage from '@/util/storage'
+import StandardButton from '@/components/buttons/standard-button'
+import OutlinedButton from '@/components/buttons/outlined-button'
+import { faDownload, faUpload, faShare } from '@fortawesome/pro-solid-svg-icons'
+import { useFactorioProject } from '@/app/factorio/context/factorio-project'
+import Api from '@/util/api'
+import ShareModal from './share-modal'
+import { fireBasicConfetti } from '@/components/confetti'
 
-const FactorioNavbar = () => {
+
+const FactorioProjectNavbar = () => {
   const router = useRouter()
+  const { projectId } = useFactorioProject()
+  const [isDownloading, setIsDownloading] = useState(false)
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false)
 
   const handleNewUpload = () => {
     router.push('/factorio')
   }
 
   const handleDownloadClick = async () => {
+    setIsDownloading(true)
     try {
-      const svgData = Storage.get('factorioSvgData')
+      const response = await Api.get(`/factorio/render-project/${projectId}`)
+      const svgData = response.svg
       if (svgData) {
         const blob = new Blob([svgData], { type: 'image/svg+xml' })
         const url = URL.createObjectURL(blob)
@@ -28,12 +38,20 @@ const FactorioNavbar = () => {
         link.click()
         document.body.removeChild(link)
         URL.revokeObjectURL(url)
+        
+        fireBasicConfetti()
       } else {
-        console.error('No SVG data found in local storage')
+        console.error('No SVG data received from API')
       }
     } catch (error) {
       console.error('Error during download:', error)
+    } finally {
+      setIsDownloading(false)
     }
+  }
+
+  const handleShareClick = () => {
+    setIsShareModalOpen(true)
   }
 
   return (
@@ -44,16 +62,24 @@ const FactorioNavbar = () => {
             <OutlinedButton icon={faUpload} onClick={handleNewUpload}>New Upload</OutlinedButton>
           </HStack>
           <HStack spacing={4}>
+            <OutlinedButton
+              icon={faShare}
+              onClick={handleShareClick}
+            >
+              Share
+            </OutlinedButton>
             <StandardButton
               variant="primary"
               icon={faDownload}
               onClick={handleDownloadClick}
+              isDisabled={isDownloading}
             >
-              Download (.SVG)
+              {isDownloading ? 'Downloading...' : 'Download (.SVG)'}
             </StandardButton>
           </HStack>
         </HStack>
       </Container>
+      <ShareModal isOpen={isShareModalOpen} onClose={() => setIsShareModalOpen(false)} />
     </Box>
   )
 }
@@ -75,4 +101,4 @@ const LinkButton = ({ href, children }) => {
   )
 }
 
-export default FactorioNavbar
+export default FactorioProjectNavbar

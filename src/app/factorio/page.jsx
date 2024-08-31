@@ -3,7 +3,6 @@
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Api from '@/util/api'
-import Storage from '@/util/storage'
 import { Button, VStack, Text, Box, Input, Heading, Container, SimpleGrid, Image, Flex, Link, OrderedList, ListItem, Code, Spinner } from '@chakra-ui/react'
 
 const Factorio = () => {
@@ -53,10 +52,12 @@ const Factorio = () => {
       const formData = new FormData()
       formData.append('file', file)
 
-      const result = await Api.post('factorio/upload-fue5', formData)
-      Storage.set('factorioSvgData', result)
-      router.push('/factorio/render')
+      const uuid = await Api.post('factorio/upload-fue5', formData)
+      console.log('results', uuid)
+      router.push(`/factorio/project/${uuid}`)
+
     } catch (error) {
+      console.error(error)
       setError('Error uploading file')
     } finally {
       setLoading(false)
