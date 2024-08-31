@@ -16,13 +16,11 @@ const RootLayout = ({ children }) => {
       <body className={inter.className}>
         <Providers>
           <NavBar />
-          <Container as="main" maxW="100%" display="flex" flexDir="column" p={{ base: 4, md: 8 }}>
-            {children}
-          </Container>
+          {children}
         </Providers>
       </body>
     </html>
   )
 }
-
 export default RootLayout
+

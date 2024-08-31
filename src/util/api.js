@@ -21,10 +21,7 @@ const Api = {
 export default Api
 
 async function request(method, endpoint, data) {
-  
-  console.log(JSON.stringify(process.env))
-  console.log(process.env.NEXT_PUBLIC_DRAWSCAPE_API_URL)
-  
+    
   try {
     const headers = {
       ...(Storage.get('access_token') && {
@@ -35,8 +32,6 @@ async function request(method, endpoint, data) {
     if (!(data instanceof FormData)) {
       headers['Content-Type'] = 'application/json'
     }
-
-    
 
     const response = await axios({
       method,

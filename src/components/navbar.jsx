@@ -1,16 +1,21 @@
 'use client'
 
-import { Button, HStack } from '@chakra-ui/react'
+import { Box, Container, HStack, Image } from '@chakra-ui/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const NavBar = () => {
   return (
-    <HStack as="nav" bg="blue" px={6} py={4}>
-      <LinkButton href="/">Home</LinkButton>
-      <LinkButton href="/accounts">Accounts</LinkButton>
-      <LinkButton href="/factorio">Factorio</LinkButton>
-    </HStack>
+    <Box as="nav" bg="white" borderBottomWidth="1px">
+      <Container py="4" maxWidth="100%">
+        <HStack justify="space-between">
+          <Link href="/">
+            <Image src='/logo.png' boxSize="60px" cursor="pointer" />
+          </Link>
+          {/* <LinkButton href="/factorio">Factorio</LinkButton> */}
+        </HStack>
+      </Container>
+    </Box>
   )
 }
 
@@ -18,16 +23,16 @@ const LinkButton = ({ href, children }) => {
   const pathname = usePathname()
 
   return (
-    <Button
-      href={href}
+    <Box
       as={Link}
+      href={href}
       fontSize={16}
-      bg="blue"
-      style={{ background: pathname === href && '#3182ceab' }}
-      _hover={{ background: '#3182ceab' }}
+      fontWeight="medium"
+      color={pathname === href ? 'blue.500' : 'gray.600'}
+      _hover={{ color: 'blue.500' }}
     >
       {children}
-    </Button>
+    </Box>
   )
 }
 
