@@ -8,7 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const ShareModal = ({ isOpen, onClose }) => {
   const { projectId, themeName, colorScheme } = useFactorioProject()
   const [copied, setCopied] = useState(false)
-  const shareUrl = `${window.location.origin}/factorio/project/${projectId}?theme_name=${themeName}&color_scheme=${colorScheme}`
+  const shareUrl = typeof window !== 'undefined' 
+    ? `${window.location.origin}/factorio/project/${projectId}?theme_name=${themeName}&color_scheme=${colorScheme}` 
+    : '';
 
   useEffect(() => {
     if (isOpen) {

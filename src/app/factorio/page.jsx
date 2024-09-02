@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Api from '@/util/api'
-import { Button, VStack, Text, Box, Input, Heading, Container, SimpleGrid, Image, Flex, Link, OrderedList, ListItem, Code, Spinner } from '@chakra-ui/react'
+import { Button, VStack, Text, Box, Input, Heading, Container, SimpleGrid, Image, Flex, Link, OrderedList, ListItem, Code, Spinner, HStack } from '@chakra-ui/react'
 
 const Factorio = () => {
   const [loading, setLoading] = useState(false)
@@ -64,6 +64,10 @@ const Factorio = () => {
     }
   }
 
+  const handleShowRandomProject = () => {
+    router.push('/factorio/project/00f07047-ea41-4b5c-957f-6ea5e6cb50a7?theme_name=default&color_scheme=matrix')
+  }
+
   return (
     <Container as="main" maxW="100%" display="flex" flexDir="column" p={{ base: 4, md: 8 }}>
     <VStack spacing={4} align="stretch">
@@ -91,13 +95,23 @@ const Factorio = () => {
           style={{ display: 'none' }}
         />
       </div>
-      <Button 
-        onClick={handleUpload} 
-        isDisabled={loading || !file}
-        leftIcon={loading ? <Spinner size="sm" /> : null}
-      >
-        {loading ? 'Uploading...' : 'Upload'}
-      </Button>
+      <HStack spacing={4}>
+        <Button 
+          onClick={handleUpload} 
+          isDisabled={loading || !file}
+          leftIcon={loading ? <Spinner size="sm" /> : null}
+          flex="1"
+        >
+          {loading ? 'Uploading...' : 'Upload'}
+        </Button>
+        <Button
+          onClick={handleShowRandomProject}
+          flex="1"
+          variant="outline"
+        >
+          Show Random Project
+        </Button>
+      </HStack>
       {error && <Text color="red.500">{error}</Text>}
       
       <Heading size="lg">Instructions</Heading>
