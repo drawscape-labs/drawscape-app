@@ -6,7 +6,7 @@ const { toast } = createStandaloneToast()
 
 const Api = {
   get: async (endpoint, params) => {
-    return request('GET', endpoint, null)
+    return request('GET', endpoint, null, params)
   },
 
   post: async (endpoint, data) => {
@@ -20,7 +20,7 @@ const Api = {
 
 export default Api
 
-async function request(method, endpoint, data) {
+async function request(method, endpoint, data, params) {
     
   try {
     const headers = {
@@ -39,6 +39,7 @@ async function request(method, endpoint, data) {
       headers,
       responseType: 'json',
       data,
+      params,
     })
     return response.data
   } catch (error) {

@@ -1,52 +1,48 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { VStack, Box } from '@chakra-ui/react'
+import { VStack } from '@chakra-ui/react'
 import FactorioProjectNavbar from '@/app/factorio/components/project-navbar'
 import Api from '@/util/api'
 import { FactorioProjectProvider, useFactorioProject } from '@/app/factorio/context/factorio-project'
 import PageLoading from '@/components/page-loading'
 
 const FactorioProjectContent = () => {
-  const [svgData, setSvgData] = useState(null)
+  const [imageData, setImageData] = useState(null)
   const [loading, setLoading] = useState(true)
-  const { projectId } = useFactorioProject()
-
-  console.log('factorio projectId', projectId)
+  const { projectId, themeName, colorScheme } = useFactorioProject()
 
   useEffect(() => {
-    const fetchSvgData = async () => {
+    const fetchImageData = async () => {
+      setLoading(true)
       try {
-        console.log('fetching svg data for project', projectId)
-        const response = await Api.get(`/factorio/render-project/${projectId}`)
-        console.log('response', response)
-        setSvgData(response.svg_string)
+        const response = await Api.get(`/factorio/render-project/${projectId}?theme_name=${themeName}&color_scheme=${colorScheme}`)
+        setImageData(response.svg_string)
       } catch (error) {
-        console.error('Error fetching SVG data:', error)
+        console.error('Error fetching image data:', error)
       } finally {
         setLoading(false)
       }
     }
 
-    fetchSvgData()
-  }, [projectId])
-
-  if (loading) {
-    return <PageLoading />
-  }
+    fetchImageData()
+  }, [projectId, themeName, colorScheme])
 
   return (
     <>
       <FactorioProjectNavbar />
-      <VStack spacing={4} align="stretch" p={4}>
-        {svgData && (
-          <Box
-            dangerouslySetInnerHTML={{ __html: svgData }}
-            width="100%"
-            height="auto"
-          />
-        )}
-      </VStack>
+      {loading ? (
+        <PageLoading message="Rendering Factorio Project" />
+      ) : (
+        <VStack spacing={4} align="stretch" p={4}>
+          {imageData && (
+            <div
+              dangerouslySetInnerHTML={{ __html: imageData }}
+              style={{ width: '100%', height: 'auto' }}
+            />
+          )}
+        </VStack>
+      )}
     </>
   )
 }

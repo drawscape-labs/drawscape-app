@@ -54,7 +54,7 @@ const Factorio = () => {
 
       const uuid = await Api.post('factorio/upload-fue5', formData)
       console.log('results', uuid)
-      router.push(`/factorio/project/${uuid}`)
+      router.push(`/factorio/project/${uuid}?theme_name=default&color_scheme=main`)
 
     } catch (error) {
       console.error(error)

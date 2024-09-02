@@ -6,9 +6,9 @@ import { faGithub, faTwitter, faInstagram, faYoutube } from '@fortawesome/free-b
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const ShareModal = ({ isOpen, onClose }) => {
-  const { projectId } = useFactorioProject()
+  const { projectId, theme, color } = useFactorioProject()
   const [copied, setCopied] = useState(false)
-  const shareUrl = `${window.location.origin}/factorio/project/${projectId}`
+  const shareUrl = `${window.location.origin}/factorio/project/${projectId}?theme=${theme}&color=${color}`
 
   useEffect(() => {
     if (isOpen) {
