@@ -12,12 +12,15 @@ const FactorioProjectContent = () => {
   const [loading, setLoading] = useState(true)
   const { projectId } = useFactorioProject()
 
+  console.log('factorio projectId', projectId)
+
   useEffect(() => {
     const fetchSvgData = async () => {
       try {
+        console.log('fetching svg data for project', projectId)
         const response = await Api.get(`/factorio/render-project/${projectId}`)
         console.log('response', response)
-        setSvgData(response.svg)
+        setSvgData(response.svg_string)
       } catch (error) {
         console.error('Error fetching SVG data:', error)
       } finally {

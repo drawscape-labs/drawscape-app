@@ -27,8 +27,9 @@ const FactorioProjectNavbar = () => {
     setIsDownloading(true)
     try {
       const response = await Api.get(`/factorio/render-project/${projectId}`)
-      const svgData = response.svg
+      const svgData = response.svg_string
       if (svgData) {
+        console.log(svgData)
         const blob = new Blob([svgData], { type: 'image/svg+xml' })
         const url = URL.createObjectURL(blob)
         const link = document.createElement('a')
