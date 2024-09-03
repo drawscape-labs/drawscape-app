@@ -1,8 +1,10 @@
 'use client'
 
-import { Box, Container, HStack, Image } from '@chakra-ui/react'
+import { Box, Container, HStack, Image, Text, Link as ChakraLink } from '@chakra-ui/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub, faTwitter, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 const NavBar = () => {
   return (
@@ -12,7 +14,21 @@ const NavBar = () => {
           <Link href="/factorio">
             <Image src='/logo.png' boxSize="60px" cursor="pointer" />
           </Link>
-          {/* <LinkButton href="/factorio">Factorio</LinkButton> */}
+          <HStack spacing={4}>
+            <Text fontWeight="bold">Follow:</Text>
+            <ChakraLink href="https://instagram.com/_draw_scape" isExternal>
+              <FontAwesomeIcon icon={faInstagram} size="lg" />
+            </ChakraLink>
+            <ChakraLink href="https://github.com/drawscape-labs" isExternal>
+              <FontAwesomeIcon icon={faGithub} size="lg" />
+            </ChakraLink>
+            <ChakraLink href="https://x.com/russell161803" isExternal>
+              <FontAwesomeIcon icon={faTwitter} size="lg" />
+            </ChakraLink>
+            <ChakraLink href="https://www.youtube.com/@draw_scape" isExternal>
+              <FontAwesomeIcon icon={faYoutube} size="lg" />
+            </ChakraLink>
+          </HStack>
         </HStack>
       </Container>
     </Box>

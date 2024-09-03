@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Api from '@/util/api'
-import { Button, VStack, Text, Box, Input, Heading, Container, SimpleGrid, Image, Flex, Link, OrderedList, ListItem, Code, Spinner, HStack } from '@chakra-ui/react'
+import { Button, VStack, Text, Box, Input, Heading, Container, SimpleGrid, Image, Flex, Link, OrderedList, ListItem, Code, Spinner, HStack, UnorderedList } from '@chakra-ui/react'
 
 const Factorio = () => {
   const [loading, setLoading] = useState(false)
@@ -139,12 +139,17 @@ const Factorio = () => {
         </Box>
         <Box flex="1">
           <Heading size="sm" textTransform="uppercase" color="gray.700" mb={2}>INSTRUCTIONS</Heading>
-          <OrderedList fontSize="lg" mb={4} spacing={2}>
+          <OrderedList fontSize="lg" mb={10} spacing={2}>
             <ListItem>Use the <Link href="https://mods.factorio.com/mod/FUE5Exporter" isExternal>FUE5Exporter</Link> mod to select and export the part of your base you want to draw.</ListItem>
             <ListItem>The mod will create a <Code>exported-entities.json</Code> file in your game data folder.</ListItem>
             <ListItem>Upload that JSON file to the interface on the left.</ListItem>
             <ListItem><Link href="https://www.youtube.com/watch?v=ysL4II1P6FE" isExternal>Video Walkthrough</Link> if you get stuck.</ListItem>
           </OrderedList>
+          <Heading size="sm" textTransform="uppercase" color="gray.700" mb={2}>Notes</Heading>
+          <UnorderedList fontSize="lg" mb={10} spacing={2}>
+            <ListItem>Your "Mega Base" might not perform well due to file size limits</ListItem>
+            <ListItem>Most of testing has been done with files less than 20MB</ListItem>
+          </UnorderedList>
         </Box>
       </Flex>
       <Heading size="lg">Examples</Heading>
