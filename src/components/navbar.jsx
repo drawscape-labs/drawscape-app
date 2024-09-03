@@ -9,7 +9,7 @@ const NavBar = () => {
     <Box as="nav" bg="white" borderBottomWidth="1px">
       <Container py="4" maxWidth="100%">
         <HStack justify="space-between">
-          <Link href="/">
+          <Link href="/factorio">
             <Image src='/logo.png' boxSize="60px" cursor="pointer" />
           </Link>
           {/* <LinkButton href="/factorio">Factorio</LinkButton> */}

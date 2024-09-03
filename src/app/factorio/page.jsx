@@ -54,7 +54,7 @@ const Factorio = () => {
 
       const uuid = await Api.post('factorio/upload-fue5', formData)
       console.log('results', uuid)
-      router.push(`/factorio/project/${uuid}?theme_name=default&color_scheme=main`)
+      router.push(`/factorio/project/${uuid}?theme_name=squares&color_scheme=black`)
 
     } catch (error) {
       console.error(error)
@@ -65,7 +65,11 @@ const Factorio = () => {
   }
 
   const handleShowRandomProject = () => {
-    router.push('/factorio/project/00f07047-ea41-4b5c-957f-6ea5e6cb50a7?theme_name=default&color_scheme=matrix')
+    let projects = [
+      '/factorio/project/3b6c52d5-5fc4-4c6e-af31-0a204632b352?color_scheme=belts&theme_name=squares',
+      '/factorio/project/00f07047-ea41-4b5c-957f-6ea5e6cb50a7?theme_name=squares&color_scheme=rails'
+    ]
+    router.push(projects[Math.floor(Math.random() * projects.length)])
   }
 
   return (
@@ -109,7 +113,7 @@ const Factorio = () => {
           flex="1"
           variant="outline"
         >
-          Show Random Project
+          Show Example Project
         </Button>
       </HStack>
       {error && <Text color="red.500">{error}</Text>}

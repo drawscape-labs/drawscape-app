@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Box, Container, HStack, Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react'
+import { Box, Container, HStack, Menu, MenuButton, MenuList, MenuItem, Button, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import StandardButton from '@/components/buttons/standard-button'
@@ -22,7 +22,7 @@ const FactorioProjectNavbar = () => {
   const [isDownloading, setIsDownloading] = useState(false)
   const [isShareModalOpen, setIsShareModalOpen] = useState(false)
   const [availableThemes, setAvailableThemes] = useState([])
-  const [availableColorSchemes, setAvailableColorSchemes] = useState([])
+  const [availableColorSchemes, setAvailableColorSchemes] = useState({})
 
   useEffect(() => {
     const fetchAvailableThemes = async () => {
@@ -42,17 +42,18 @@ const FactorioProjectNavbar = () => {
   useEffect(() => {
     const fetchAvailableColorSchemes = async () => {
       try {
-        const response = await Api.get(`/factorio/available-colors?theme_name=${themeName}`)
+        const response = await Api.get(`/factorio/available-colors?theme=${themeName}`)
         console.log('response', response)
-        setAvailableColorSchemes(response.colors || [])
+
+        setAvailableColorSchemes(response.colors || {})
       } catch (error) {
         console.error('Error fetching available color schemes:', error)
-        setAvailableColorSchemes([])
+        setAvailableColorSchemes({})
       }
     }
 
     fetchAvailableColorSchemes()
-  }, [])
+  }, [themeName])
 
   const handleNewUpload = () => {
     router.push('/factorio')
@@ -134,14 +135,30 @@ const FactorioProjectNavbar = () => {
                 Change Color
               </MenuButton>
               <MenuList>
-                {availableColorSchemes.length > 0 ? (
-                  availableColorSchemes.map((availableColorScheme, index) => (
+                {Object.keys(availableColorSchemes).length > 0 ? (
+                  Object.entries(availableColorSchemes).map(([schemeName, schemeData]) => (
                     <MenuItem 
-                      key={index} 
-                      fontWeight={colorScheme === availableColorScheme ? 'bold' : 'normal'}
-                      onClick={() => handleColorSchemeChange(availableColorScheme)}
+                      key={schemeName} 
+                      fontWeight={colorScheme === schemeName ? 'bold' : 'normal'}
+                      onClick={() => handleColorSchemeChange(schemeName)}
                     >
-                      {availableColorScheme}
+                      <HStack spacing={2} alignItems="center" justifyContent="space-between" width="100%">
+                        <Text>{schemeName}</Text>
+                        <HStack spacing={1} justifyContent="flex-end">
+                          {Object.entries(schemeData).map(([key, color], index) => (
+                            key !== 'bg' ? (
+                              <Box key={index} width="10px" height="20px" borderRadius="sm" bg={color} border="1px solid #e0e0e0" />
+                            ) : null
+                          ))}
+                          <Box 
+                            width="10px" 
+                            height="20px" 
+                            borderRadius="sm" 
+                            bg={schemeData.bg || 'white'} 
+                            border="1px solid #e0e0e0" 
+                          />
+                        </HStack>
+                      </HStack>
                     </MenuItem>
                   ))
                 ) : (
