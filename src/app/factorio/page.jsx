@@ -39,6 +39,13 @@ const Factorio = () => {
     '/factorio_examples/penplot_blueprint.png',
   ]
 
+  const digitalExamples = [
+    '/factorio_examples/digital_rails.png',
+    '/factorio_examples/digital_blueprint.png',
+    '/factorio_examples/digital_blue.png',
+    '/factorio_examples/digital_black.png'
+  ]
+
   const handleUpload = async () => {
     if (!file) {
       setError('Please select a file')
@@ -75,60 +82,77 @@ const Factorio = () => {
   return (
     <Container as="main" maxW="100%" display="flex" flexDir="column" p={{ base: 4, md: 8 }}>
     <VStack spacing={4} align="stretch">
-      <Heading as="h1">Factorio Base Visualizer</Heading>
+      <Heading as="h1" display="flex" alignItems="center">
+        <Image
+          src="/factorio_logo.png"
+          alt="Factorio Logo"
+          height={65}
+          style={{ marginRight: '10px' }}
+        />
+        Factorio Base Visualizer
+      </Heading>
       <Text fontSize="lg" mb={4}>
         Upload your Factorio base to see it come to life!
       </Text>
-      <div
-        onClick={handleClick}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        style={{
-          border: '2px dashed #ccc',
-          padding: '100px',
-          textAlign: 'center',
-          cursor: 'pointer',
-          width: '100%',
-        }}
-      >
-        {file ? <Text>Selected file: {file.name}</Text> : <Text>Drag & drop your .json export file here, or click to select</Text>}
-        <Input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          style={{ display: 'none' }}
-        />
-      </div>
-      <HStack spacing={4}>
-        <Button 
-          onClick={handleUpload} 
-          isDisabled={loading || !file}
-          leftIcon={loading ? <Spinner size="sm" /> : null}
-          flex="1"
-        >
-          {loading ? 'Uploading...' : 'Upload'}
-        </Button>
-        <Button
-          onClick={handleShowRandomProject}
-          flex="1"
-          variant="outline"
-        >
-          Show Example Project
-        </Button>
-      </HStack>
-      {error && <Text color="red.500">{error}</Text>}
-      
-      <Heading size="lg">Instructions</Heading>
-      <OrderedList fontSize="lg" mb={4} spacing={2}>
-        <ListItem>Use the <Link href="https://mods.factorio.com/mod/FUE5Exporter" isExternal>FUE5Exporter</Link> mod to select and export the part of your base you want to draw.</ListItem>
-        <ListItem>The mod will create a <Code>exported-entities.json</Code> file in your game data folder.</ListItem>
-        <ListItem>Upload that JSON file to the interface above.</ListItem>
-      </OrderedList>
+      <Flex direction={{ base: 'column', md: 'row' }} gap={8} mb={100}>
+        <Box flex="1">
+          <Box bg="white" boxShadow="lg" borderRadius="md" p={6}>
+            <div
+              onClick={handleClick}
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              style={{
+                border: '2px dashed #ccc',
+                padding: '150px',
+                textAlign: 'center',
+                cursor: 'pointer',
+                width: '100%',
+              }}
+            >
+              {file ? <Text>Selected file: {file.name}</Text> : <Text>Drag & drop your .json export file here, or click to select</Text>}
+              <Input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
+              />
+            </div>
+            <HStack spacing={4} mt={4}>
+              <Button 
+                onClick={handleUpload} 
+                isDisabled={loading || !file}
+                leftIcon={loading ? <Spinner size="sm" /> : null}
+                flex="1"
+              >
+                {loading ? 'Uploading...' : 'Upload'}
+              </Button>
+              <Button
+                onClick={handleShowRandomProject}
+                flex="1"
+                variant="outline"
+              >
+                Show Example Project
+              </Button>
+            </HStack>
+            {error && <Text color="red.500" mt={2}>{error}</Text>}
+          </Box>
+        </Box>
+        <Box flex="1">
+          <Heading size="sm" textTransform="uppercase" color="gray.700" mb={2}>INSTRUCTIONS</Heading>
+          <OrderedList fontSize="lg" mb={4} spacing={2}>
+            <ListItem>Use the <Link href="https://mods.factorio.com/mod/FUE5Exporter" isExternal>FUE5Exporter</Link> mod to select and export the part of your base you want to draw.</ListItem>
+            <ListItem>The mod will create a <Code>exported-entities.json</Code> file in your game data folder.</ListItem>
+            <ListItem>Upload that JSON file to the interface on the left.</ListItem>
+            <ListItem><Link href="https://www.youtube.com/watch?v=ysL4II1P6FE" isExternal>Video Walkthrough</Link> if you get stuck.</ListItem>
+          </OrderedList>
+        </Box>
+      </Flex>
       <Heading size="lg">Examples</Heading>
-      <Text fontSize="lg" mb={4}>Using the SVG files and a pen plotter to draw Factorio bases with pen and paper.</Text>
+      <Heading size="sm">Pen Plotting</Heading>
+      <Text fontSize="lg">Using the SVG files and a pen plotter to draw with pen and paper.</Text>
       <SimpleGrid columns={4} spacing={4}>
         {exampleImages.map((src, index) => (
-          <Flex key={index} justifyContent="center" alignItems="center" height="500px" overflow="hidden">
+          <Flex key={index} justifyContent="center" alignItems="center" overflow="hidden">
             <Box width="100%" height="100%" position="relative">
               <Image
                 src={src}
@@ -140,6 +164,22 @@ const Factorio = () => {
           </Flex>
         ))}
       </SimpleGrid>
+      <Heading size="sm" mt={4}>Digital (.SVG)</Heading>
+      <SimpleGrid columns={2} spacing={4}>
+        {digitalExamples.map((src, index) => (
+          <Flex key={index} justifyContent="center" alignItems="center" overflow="hidden">
+            <Box width="100%" height="100%" position="relative">
+              <Image
+                src={src}
+                alt={`Example ${index + 1}`}
+                objectFit="contain"
+                layout="fill"
+              />
+            </Box>
+          </Flex>
+        ))}
+      </SimpleGrid>
+
       </VStack>
     </Container>
   )
