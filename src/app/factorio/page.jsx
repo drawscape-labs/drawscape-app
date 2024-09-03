@@ -147,7 +147,7 @@ const Factorio = () => {
           </OrderedList>
           <Heading size="sm" textTransform="uppercase" color="gray.700" mb={2}>Notes</Heading>
           <UnorderedList fontSize="lg" mb={10} spacing={2}>
-            <ListItem>Your "Mega Base" might not perform well due to file size limits</ListItem>
+            <ListItem>Your Mega Base might not perform well due to file size limits</ListItem>
             <ListItem>Most of testing has been done with files less than 20MB</ListItem>
           </UnorderedList>
         </Box>
