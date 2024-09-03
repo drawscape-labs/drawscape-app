@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Api from '@/util/api'
 import { Button, VStack, Text, Box, Input, Heading, Container, SimpleGrid, Image, Flex, Link, OrderedList, ListItem, Code, Spinner, HStack, UnorderedList } from '@chakra-ui/react'
 
+
 const Factorio = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -80,113 +81,130 @@ const Factorio = () => {
   }
 
   return (
-    <Container as="main" maxW="100%" display="flex" flexDir="column" p={{ base: 4, md: 8 }}>
-    <VStack spacing={4} align="stretch">
-      <Heading as="h1" display="flex" alignItems="center">
-        <Image
-          src="/factorio_logo.png"
-          alt="Factorio Logo"
-          height={65}
-          style={{ marginRight: '10px' }}
-        />
-        Factorio Base Visualizer
-      </Heading>
-      <Text fontSize="lg" mb={4}>
-        Upload your Factorio base to see it come to life!
-      </Text>
-      <Flex direction={{ base: 'column', md: 'row' }} gap={8} mb={100}>
-        <Box flex="1">
-          <Box bg="white" boxShadow="lg" borderRadius="md" p={6}>
-            <div
-              onClick={handleClick}
-              onDrop={handleDrop}
-              onDragOver={handleDragOver}
-              style={{
-                border: '2px dashed #ccc',
-                padding: '150px',
-                textAlign: 'center',
-                cursor: 'pointer',
-                width: '100%',
-              }}
-            >
-              {file ? <Text>Selected file: {file.name}</Text> : <Text>Drag & drop your .json export file here, or click to select</Text>}
-              <Input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
-              />
-            </div>
-            <HStack spacing={4} mt={4}>
-              <Button 
-                onClick={handleUpload} 
-                isDisabled={loading || !file}
-                leftIcon={loading ? <Spinner size="sm" /> : null}
-                flex="1"
+    <>
+      <Container as="main" maxW="100%" display="flex" flexDir="column" p={{ base: 4, md: 8 }}>
+      <VStack spacing={4} align="stretch">
+        <Heading as="h1" display="flex" alignItems="center">
+          <Image
+            src="/factorio_logo.png"
+            alt="Factorio Logo"
+            height={65}
+            style={{ marginRight: '10px' }}
+          />
+          Factorio Visualizer
+        </Heading>
+        <Text fontSize="lg" mb={4}>
+          Upload your Factorio base to see it come to life!
+        </Text>
+        <Flex direction={{ base: 'column', md: 'row' }} gap={8} mb={100}>
+          <Box flex="1">
+            <Box bg="white" boxShadow="lg" borderRadius="md" p={6}>
+              <div
+                onClick={handleClick}
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                style={{
+                  border: '2px dashed #ccc',
+                  padding: '150px',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  width: '100%',
+                }}
               >
-                {loading ? 'Uploading...' : 'Upload'}
-              </Button>
-              <Button
-                onClick={handleShowRandomProject}
-                flex="1"
-                variant="outline"
-              >
-                Show Example Project
-              </Button>
-            </HStack>
-            {error && <Text color="red.500" mt={2}>{error}</Text>}
+                {file ? <Text>Selected file: {file.name}</Text> : <Text>Drag & drop your .json export file here, or click to select</Text>}
+                <Input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  style={{ display: 'none' }}
+                />
+              </div>
+              <HStack spacing={4} mt={4}>
+                <Button 
+                  onClick={handleUpload} 
+                  isDisabled={loading || !file}
+                  leftIcon={loading ? <Spinner size="sm" /> : null}
+                  flex="1"
+                >
+                  {loading ? 'Uploading...' : 'Upload'}
+                </Button>
+                <Button
+                  onClick={handleShowRandomProject}
+                  flex="1"
+                  variant="outline"
+                >
+                  Show Example Project
+                </Button>
+              </HStack>
+              {error && <Text color="red.500" mt={2}>{error}</Text>}
+            </Box>
           </Box>
-        </Box>
-        <Box flex="1">
-          <Heading size="sm" textTransform="uppercase" color="gray.700" mb={2}>INSTRUCTIONS</Heading>
-          <OrderedList fontSize="lg" mb={10} spacing={2}>
-            <ListItem>Use the <Link href="https://mods.factorio.com/mod/FUE5Exporter" isExternal>FUE5Exporter</Link> mod to select and export the part of your base you want to draw.</ListItem>
-            <ListItem>The mod will create a <Code>exported-entities.json</Code> file in your game data folder.</ListItem>
-            <ListItem>Upload that JSON file to the interface on the left.</ListItem>
-            <ListItem><Link href="https://www.youtube.com/watch?v=ysL4II1P6FE" isExternal>Video Walkthrough</Link> if you get stuck.</ListItem>
-          </OrderedList>
-          <Heading size="sm" textTransform="uppercase" color="gray.700" mb={2}>Notes</Heading>
-          <UnorderedList fontSize="lg" mb={10} spacing={2}>
-            <ListItem>Your Mega Base might not perform well due to file size limits</ListItem>
-            <ListItem>Most of testing has been done with files less than 20MB</ListItem>
-          </UnorderedList>
-        </Box>
-      </Flex>
-      <Heading size="lg">Examples</Heading>
-      <Heading size="sm">Pen Plotting</Heading>
-      <Text fontSize="lg">Using the SVG files and a pen plotter to draw with pen and paper.</Text>
-      <SimpleGrid columns={4} spacing={4}>
-        {exampleImages.map((src, index) => (
-          <Flex key={index} justifyContent="center" alignItems="center" overflow="hidden">
-            <Box width="100%" height="100%" position="relative">
-              <Image
-                src={src}
-                alt={`Example ${index + 1}`}
-                objectFit="contain"
-                layout="fill"
-              />
+          <Box flex="1">
+            <Heading size="sm" textTransform="uppercase" color="gray.700" mb={2}>INSTRUCTIONS</Heading>
+            <OrderedList fontSize="lg" mb={10} spacing={2}>
+              <ListItem>Use the <Link href="https://mods.factorio.com/mod/FUE5Exporter" isExternal>FUE5Exporter</Link> mod to select and export the part of your base you want to draw.</ListItem>
+              <ListItem>The mod will create a <Code>exported-entities.json</Code> file in your game data folder.</ListItem>
+              <ListItem>Upload that JSON file to the interface on the left.</ListItem>
+              <ListItem><Link href="https://www.youtube.com/watch?v=ysL4II1P6FE" isExternal>Video Walkthrough</Link> if you get stuck.</ListItem>
+            </OrderedList>
+            <Heading size="sm" textTransform="uppercase" color="gray.700" mb={2}>Notes</Heading>
+            <UnorderedList fontSize="lg" mb={10} spacing={2}>
+              <ListItem>Your Mega Base might render well if it's super spread out.</ListItem>
+              <ListItem>Most of testing has been done with files less than 50MB.</ListItem>
+            </UnorderedList>
+          </Box>
+        </Flex>
+        <Heading size="lg">Examples</Heading>
+        <Heading size="sm">Pen Plotting</Heading>
+        <Text fontSize="lg">Using the SVG files and a pen plotter to draw with pen and paper.</Text>
+        <SimpleGrid columns={4} spacing={4}>
+          {exampleImages.map((src, index) => (
+            <Flex key={index} justifyContent="center" alignItems="center" overflow="hidden">
+              <Box width="100%" height="100%" position="relative">
+                <Image
+                  src={src}
+                  alt={`Example ${index + 1}`}
+                  objectFit="contain"
+                  layout="fill"
+                />
+              </Box>
+            </Flex>
+          ))}
+        </SimpleGrid>
+        <Heading size="sm" mt={4}>Digital (.SVG)</Heading>
+        <SimpleGrid columns={2} spacing={4}>
+          {digitalExamples.map((src, index) => (
+            <Box
+              key={index}
+              width="100%"
+              paddingBottom="100%"
+              position="relative"
+              overflow="hidden"
+            >
+              <Box
+                position="absolute"
+                top="0"
+                left="0"
+                right="0"
+                bottom="0"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Image
+                  src={src}
+                  alt={`Example ${index + 1}`}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </Box>
             </Box>
-          </Flex>
-        ))}
-      </SimpleGrid>
-      <Heading size="sm" mt={4}>Digital (.SVG)</Heading>
-      <SimpleGrid columns={2} spacing={4}>
-        {digitalExamples.map((src, index) => (
-          <Flex key={index} justifyContent="center" alignItems="center" overflow="hidden">
-            <Box width="100%" height="100%" position="relative">
-              <Image
-                src={src}
-                alt={`Example ${index + 1}`}
-                objectFit="contain"
-                layout="fill"
-              />
-            </Box>
-          </Flex>
-        ))}
-      </SimpleGrid>
+          ))}
+        </SimpleGrid>
 
-      </VStack>
-    </Container>
+        </VStack>
+      </Container>
+    </>
   )
 }
 

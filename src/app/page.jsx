@@ -10,7 +10,11 @@ const Home = () => {
     router.push('/factorio');
   }, [router]);
 
-  return null;
+  return (
+    <>
+      {null}
+    </>
+  );
 };
 
 export default Home;

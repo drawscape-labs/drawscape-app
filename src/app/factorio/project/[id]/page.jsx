@@ -6,6 +6,8 @@ import FactorioProjectNavbar from '@/app/factorio/components/project-navbar'
 import Api from '@/util/api'
 import { FactorioProjectProvider, useFactorioProject } from '@/app/factorio/context/factorio-project'
 import PageLoading from '@/components/page-loading'
+import Head from 'next/head'
+import Metadata from 'next/metadata'
 
 const FactorioProjectContent = () => {
   const [imageData, setImageData] = useState(null)
@@ -30,6 +32,9 @@ const FactorioProjectContent = () => {
 
   return (
     <>
+      <Head>
+        <title>Factorio Visualizer - Drawscape</title>
+      </Head>
       <FactorioProjectNavbar />
       {loading ? (
         <PageLoading message="Rendering Factorio Project" />
